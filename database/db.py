@@ -1,9 +1,6 @@
-# database/db.py
 import sqlite3
 from contextlib import contextmanager
-from pathlib import Path
-
-DATABASE_PATH = Path("sina_main.db")
+from config import DATABASE_PATH
 
 @contextmanager
 def get_connection():
