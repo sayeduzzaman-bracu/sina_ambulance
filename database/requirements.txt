@@ -1,0 +1,6 @@
+streamlit
+requests
+Werkzeug
+folium
+streamlit-folium
+fpdf2
