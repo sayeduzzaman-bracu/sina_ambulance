@@ -8,8 +8,8 @@ LOCATION_DB_PATH = "database/bangladesh_locations_seed.sqlite"
 # ---------------------------------------------------------------------------
 
 def _get_conn():
-    """Open a read-only connection to the location seed database."""
-    conn = sqlite3.connect(f"file:{LOCATION_DB_PATH}?mode=ro", uri=True)
+    """Open a connection to the location seed database."""
+    conn = sqlite3.connect(LOCATION_DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -198,3 +198,4 @@ def get_coordinates_for_address(address: str):
         return None, None
     finally:
         conn.close()
+
