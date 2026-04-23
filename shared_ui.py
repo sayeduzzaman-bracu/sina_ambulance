@@ -8,7 +8,7 @@ def render_top_bar():
     if 'lang' not in st.session_state: st.session_state.lang = 'EN'
     if 'ui_theme' not in st.session_state: st.session_state.ui_theme = '💻 Auto'
 
-    # 2. Top Right Alignment using columns (Large empty left column pushes others right)
+    # 2. Top Right Alignment using columns
     c1, c2, c3 = st.columns([7, 1.5, 1.5])
     
     with c2:
@@ -36,11 +36,19 @@ def render_top_bar():
 def inject_custom_css(theme_choice):
     base_css = """
     <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        .block-container {padding-top: 1rem;} /* Reduced so top bar looks flush */
+        /* 1. FORCE Header and Sidebar Arrow to be visible and always in front */
+        header { visibility: visible !important; background: transparent !important; z-index: 9999 !important; }
+        [data-testid="collapsedControl"] { visibility: visible !important; display: flex !important; z-index: 10000 !important; }
         
+        /* 2. Hide ONLY the right-side Streamlit defaults (Deploy button, hamburger menu) */
+        #MainMenu { display: none !important; }
+        [data-testid="stHeaderActionElements"] { display: none !important; }
+        footer { visibility: hidden !important; }
+        
+        /* 3. Give the top a little breathing room so content doesn't cover the arrow */
+        .block-container { padding-top: 3.5rem !important; } 
+        
+        /* Button & Metric Styling */
         .stButton>button { transition: all 0.3s ease-in-out; border-radius: 6px; font-weight: 600; }
         .stButton>button[data-testid="baseButton-primary"] { background-color: #059669 !important; color: white !important; border: none !important; }
         .stButton>button[data-testid="baseButton-primary"]:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4) !important; background-color: #047857 !important; }
